@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ApiTest } from './testComponents/api-test/api-test';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,ApiTest],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
