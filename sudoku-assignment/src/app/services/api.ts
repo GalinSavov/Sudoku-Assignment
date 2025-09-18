@@ -8,6 +8,7 @@ import { BoardResponse } from '../models/boardResponse';
 import { ValidateResponse } from '../models/validateResponse';
 import { SolveResponse } from '../models/solveResponse';
 import { BoardRequest } from '../models/boardRequest';
+import { Difficulty } from '../models/difficulty';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,11 +18,10 @@ export class Api {
 
   private encodeBoardRequest(request:BoardRequest): string{
     return 'board=' + encodeURIComponent(JSON.stringify(request.board));
-
   }
-  generateData(apiParams: ApiParams){
+  generateData(difficulty: Difficulty){
     let params = new HttpParams();
-    params = params.append('difficulty',apiParams.difficulty)
+    params = params.append('difficulty',difficulty)
     return this.http.get<BoardResponse>(this.baseUrl + 'board',{params});
   }
   validateBoard(board:Board): Observable<ValidateResponse>{

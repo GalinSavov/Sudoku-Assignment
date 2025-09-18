@@ -1,12 +1,13 @@
 <h1 class="text-2xl font-bold">Generation of a sudoku board</h1>
-<p>{{this.board()}}</p>
+<button mat-stroked-button (click)="generateBoard('easy')">Generate</button>
+<p>{{this.sudokuStateService.board()}}</p>
 <h1 class="text-2xl font-bold mt-3">Validation of a sudoku board</h1>
 <button mat-stroked-button (click)="validateBoard()">Validate</button>
-@if (this.status()) {
-    <h1 class="text-2xl font-bold">{{this.status()}}</h1>
+@if (this.sudokuStateService.status()) {
+    <h1 class="text-2xl font-bold">{{this.sudokuStateService.status()}}</h1>
 }
 <div></div>
 <h1 class="text-2xl font-bold mt-3">Solve the sudoku board</h1>
 <button mat-stroked-button (click)="solveBoard()">Solve</button>
-<p>{{this.board()}}</p>
+<p>{{this.sudokuStateService.board()}}</p>
 
