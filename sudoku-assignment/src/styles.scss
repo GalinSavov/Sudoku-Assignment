@@ -37,3 +37,17 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.snack-solved{
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color:rgb(6, 166, 70),
+    supporting-text-color:white
+  ));
+}
+.snack-unsolved{
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color:rgb(184, 16, 16),
+    supporting-text-color:white
+  ));
+}
