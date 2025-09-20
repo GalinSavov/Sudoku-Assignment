@@ -2,23 +2,26 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SudokuState } from '../../services/sudoku-state';
 import { Difficulty } from '../../models/difficulty';
 import { MatButton } from '@angular/material/button';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatMenu, MatMenuTrigger} from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { NgClass } from '@angular/common';
+import { BoardCell } from '../../models/boardCell';
 @Component({
   selector: 'app-game-board',
-  imports: [MatButton,FormsModule, ReactiveFormsModule,MatMenu,MatMenuTrigger,MatIcon,MatListOption, MatSelectionList ],
+  imports: [MatButton,FormsModule, ReactiveFormsModule,MatMenu,MatMenuTrigger,MatIcon,MatListOption, MatSelectionList,NgClass ],
   templateUrl: './game-board.html',
   styleUrl: './game-board.scss'
 })
 export class GameBoard implements OnInit {
 
   protected sudokuStateService = inject(SudokuState);
-  protected sudokuSize: number = 9;
+  protected readonly sudokuSize: number = 9;
   protected numPad: number[] = [1,2,3,4,5,6,7,8,9];
-  protected difficulties: Difficulty[] = ['easy','medium','hard'];
+  protected readonly difficulties: Difficulty[] = ['easy','medium','hard'];
   protected selectedDifficulty:Difficulty = 'easy';
+  protected selectedCell: {row:number,column:number} | null = null;
 
   ngOnInit(): void {
     this.generateBoard('easy');
@@ -27,12 +30,12 @@ export class GameBoard implements OnInit {
       this.sudokuStateService.generateBoard(difficulty);
     }
   validateBoard(){
-    if(!this.sudokuStateService.board()) return;
-    this.sudokuStateService.validateBoard(this.sudokuStateService.board()!);
+    if(!this.sudokuStateService.gameBoard()) return;
+    this.sudokuStateService.validateBoard();
   }
   solveBoard(){
-    if(!this.sudokuStateService.board()) return;
-    this.sudokuStateService.solveBoard(this.sudokuStateService.board()!)
+    if(!this.sudokuStateService.gameBoard()) return;
+    this.sudokuStateService.solveBoard(this.sudokuStateService.gameBoard()!);
   }
   onDifficultyChange(event:MatSelectionListChange)
   {
@@ -40,6 +43,73 @@ export class GameBoard implements OnInit {
       if(selectedDifficulty){
         this.sudokuStateService.difficulty.set(selectedDifficulty.value);
         this.selectedDifficulty = this.sudokuStateService.difficulty()!;
+        this.generateBoard(this.selectedDifficulty);
       }
+  }
+  onKeyDown(event:KeyboardEvent){
+    if(!this.selectedCell) return;
+    const boundsIndex = 8;
+    let {row,column} = this.selectedCell;
+    switch (event.key) {
+      case 'ArrowUp':
+        row = Math.max(0,row - 1);
+        break;
+      case 'ArrowDown':
+        event.preventDefault();
+        row = Math.min(boundsIndex,row + 1);  
+        break;
+      case 'ArrowRight':
+        event.preventDefault();
+        column = Math.min(boundsIndex,column + 1);
+        break;
+      case 'ArrowLeft':
+        event.preventDefault();
+        column = Math.max(0,column - 1);
+        break;    
+      default:
+        break;
+    }
+    
+    if (!/^[1-9]$/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Delete') {
+    event.preventDefault();
+    }
+    this.selectedCell = {row,column};
+    this.focusCell(row,column);
+  }
+  onCellInput(event:any,cellRow:number,cellCol:number,boardCell:BoardCell){
+    const input = event.target as HTMLInputElement;
+    let value = parseInt(input.value, 10);
+
+    if(value < 1 || value > 9) {
+    input.value = '';
+    return;
+    }
+    if(boardCell.invalid){
+      console.log('invalid');
+      boardCell.invalid = false
+    }
+    if(input.value != ''){
+      if(!this.sudokuStateService.updateBoard(cellRow,cellCol,value)){
+        if(this.sudokuStateService.mistakes() === 0){
+          console.warn('Game Over!');
+        }
+      }
+    }
+  }
+  private focusCell(row: number, col: number) {
+  setTimeout(() => {
+    const el = document.querySelector(
+      `[data-cell="${row}-${col}"]`
+    ) as HTMLInputElement | null;
+    if (el) {
+      el.focus();
+    }
+  });
+}
+  onNumpadClick(newValue:number){
+    if(!this.selectedCell) return;
+    const {row,column} = this.selectedCell;
+    const valid = this.sudokuStateService.updateBoard(row,column,newValue);
+    if(valid) this.selectedCell = null;
   }
 }

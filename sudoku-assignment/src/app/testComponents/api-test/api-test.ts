@@ -10,17 +10,19 @@ import { SudokuState } from '../../services/sudoku-state';
   styleUrl: './api-test.scss'
 })
 export class ApiTest {
+  /*
   protected sudokuStateService = inject(SudokuState);
   generateBoard(difficulty:Difficulty){
-    if(this.sudokuStateService.board()) return;
+    if(this.sudokuStateService.apiBoard()) return;
     this.sudokuStateService.generateBoard(difficulty);
   }
   validateBoard(){
-    if(!this.sudokuStateService.board()) return;
-    this.sudokuStateService.validateBoard(this.sudokuStateService.board()!);
+    if(!this.sudokuStateService.apiBoard()) return;
+    this.sudokuStateService.validateBoard(this.sudokuStateService.apiBoard()!);
   }
   solveBoard(){
-    if(!this.sudokuStateService.board()) return;
-    this.sudokuStateService.solveBoard(this.sudokuStateService.board()!)
+    if(!this.sudokuStateService.apiBoard()) return;
+    this.sudokuStateService.solveBoard(this.sudokuStateService.apiBoard()!)
   }
+    */
 }

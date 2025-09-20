@@ -1,3 +1,1 @@
-import { BoardCell } from "./boardCell";
-
-export type Board = Array<Array<BoardCell>>;
+export type Board = Array<Array<number>>;

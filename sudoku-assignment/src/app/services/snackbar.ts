@@ -6,13 +6,13 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class Snackbar {
   private snackbar = inject(MatSnackBar);
-  unsolved(message:string){
+  error(message:string){
     this.snackbar.open(message,'Close',{
       duration:1500,
       panelClass: ['snack-unsolved']
     })
   }
-  solved(message:string){
+  success(message:string){
     this.snackbar.open(message,'Close',{
       duration:1500,
       panelClass: ['snack-solved']
