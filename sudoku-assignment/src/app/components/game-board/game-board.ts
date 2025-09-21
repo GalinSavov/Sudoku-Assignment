@@ -8,9 +8,10 @@ import { MatIcon } from '@angular/material/icon';
 import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 import { NgClass } from '@angular/common';
 import { BoardCell } from '../../models/boardCell';
+import { GameOver } from "../game-over/game-over";
 @Component({
   selector: 'app-game-board',
-  imports: [MatButton,FormsModule, ReactiveFormsModule,MatMenu,MatMenuTrigger,MatIcon,MatListOption, MatSelectionList,NgClass ],
+  imports: [MatButton, FormsModule, ReactiveFormsModule, MatMenu, MatMenuTrigger, MatIcon, MatListOption, MatSelectionList, NgClass, GameOver],
   templateUrl: './game-board.html',
   styleUrl: './game-board.scss'
 })
