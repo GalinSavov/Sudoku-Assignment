@@ -1,0 +1,81 @@
+<div class="p-6 max-w-3xl mx-auto">
+  <mat-card class="shadow-lg rounded-xl">
+    <mat-card-header>
+      <mat-card-title class="text-3xl font-extrabold text-gray-800 text-center">
+        🧩 Sudoku Rules
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="mt-4 space-y-6 text-gray-700 leading-relaxed">
+      <p class="text-xl text-center mb-6">
+        Fill the 9x9 grid so that every row, column, and 3x3 mini-square contains
+        <span class="font-semibold text-rose-600">numbers 1-9</span> without repeating.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex items-center gap-3">
+          <mat-icon class="flex-shrink-0 text-green-600 text-2xl min-w-[2rem] leading-none">check_circle</mat-icon>
+          <p class="text-xl">
+            Each <span class="font-semibold">row</span> must contain numbers 1-9 without repetition.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <mat-icon class="flex-shrink-0 text-purple-600 text-2xl min-w-[2rem] leading-none">check_circle</mat-icon>
+          <p class="text-xl">
+            Each <span class="font-semibold">column</span> must contain numbers 1-9 without repetition.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <mat-icon class="flex-shrink-0 text-red-600 text-2xl min-w-[2rem] leading-none">check_circle</mat-icon>
+          <p class="text-xl">
+            Each <span class="font-semibold">3x3 mini-square</span> must contain numbers 1-9 without repetition.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <mat-icon class="flex-shrink-0 text-yellow-500 text-2xl min-w-[2rem] leading-none">keyboard</mat-icon>
+          <p class="text-xl">
+            You can input numbers using either your <span class="font-semibold">keyboard</span> or the <span class="font-semibold">number pad</span>.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <p class="text-center text-xl font-medium text-gray-800 mb-2">Example Correct Mini-Square:</p>
+        <div class="w-24 mx-auto border-4 border-black grid grid-cols-3 gap-0 divide-x divide-y divide-gray-300 overflow-hidden rounded-sm">
+          <div class="h-8 flex items-center justify-center font-bold">1</div>
+          <div class="h-8 flex items-center justify-center font-bold">2</div>
+          <div class="h-8 flex items-center justify-center font-bold">3</div>
+          <div class="h-8 flex items-center justify-center font-bold">4</div>
+          <div class="h-8 flex items-center justify-center font-bold">5</div>
+          <div class="h-8 flex items-center justify-center font-bold">6</div>
+          <div class="h-8 flex items-center justify-center font-bold">7</div>
+          <div class="h-8 flex items-center justify-center font-bold">8</div>
+          <div class="h-8 flex items-center justify-center font-bold">9</div>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <p class="text-center text-xl font-medium text-gray-800 mb-2">Example Wrong Mini-Square:</p>
+        <div class="w-24 mx-auto border-4 border-black grid grid-cols-3 gap-0 divide-x divide-y divide-gray-300 overflow-hidden rounded-sm">
+          <div class="h-8 w-8 flex items-center justify-center bg-red-100 font-bold">7</div>
+          <div class="h-8 w-8 flex items-center justify-center bg-red-100 font-bold">9</div>
+          <div class="h-8 w-8 flex items-center justify-center font-bold">3</div>
+          <div class="h-8 w-8 flex items-center justify-center bg-red-100 font-bold">4</div>
+          <div class="h-8 w-8 flex items-center justify-center font-bold">5</div>
+          <div class="h-8 w-8 flex items-center justify-center bg-red-100 font-bold">4</div>
+          <div class="h-8 w-8 flex items-center justify-center bg-red-100 font-bold">7</div>
+          <div class="h-8 w-8 flex items-center justify-center font-bold">8</div>
+          <div class="h-8 w-8 flex items-center justify-center bg-red-100 font-bold">9</div>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions class="flex justify-center mt-4">
+      <button mat-stroked-button color="primary" routerLink="/">
+        Got it!
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
