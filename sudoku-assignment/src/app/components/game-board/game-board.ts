@@ -10,9 +10,10 @@ import { NgClass } from '@angular/common';
 import { BoardCell } from '../../models/boardCell';
 import { GameOver } from "../game-over/game-over";
 import { SudokuGame } from '../../services/sudoku-game';
+import { GameWon } from "../game-won/game-won";
 @Component({
   selector: 'app-game-board',
-  imports: [MatButton, FormsModule, ReactiveFormsModule, MatMenu, MatMenuTrigger, MatIcon, MatListOption, MatSelectionList, NgClass, GameOver],
+  imports: [MatButton, FormsModule, ReactiveFormsModule, MatMenu, MatMenuTrigger, MatIcon, MatListOption, MatSelectionList, NgClass, GameOver, GameWon],
   templateUrl: './game-board.html',
   styleUrl: './game-board.scss'
 })
@@ -82,7 +83,7 @@ export class GameBoard implements OnInit {
   onCellInput(event:any,cellRow:number,cellCol:number,boardCell:BoardCell){
     const input = event.target as HTMLInputElement;
     let value = parseInt(input.value, 10);
-
+    const isCellValid = this.sudokuStateService.isCellValid(cellRow, cellCol, value);
     if(value < 1 || value > 9) {
     input.value = '';
     return;
@@ -92,10 +93,13 @@ export class GameBoard implements OnInit {
       boardCell.invalid = false
     }
     if(input.value != ''){
-      if(!this.sudokuStateService.isCellValid(cellRow,cellCol,value)){
+      if(!isCellValid){
         if(this.sudokuStateService.mistakes() === 0){
           console.warn('Game Over!');
         }
+      }
+      else if(isCellValid && this.sudokuGameService.isBoardComplete(this.sudokuStateService.gameBoard()!)){
+          console.log("YOU WON");
       }
     }
   }

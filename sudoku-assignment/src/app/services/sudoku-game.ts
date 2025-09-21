@@ -51,6 +51,11 @@ export class SudokuGame {
     }
     return output;
   }
+  isBoardComplete(gameBoard: GameBoard): boolean {
+  return gameBoard.every(row =>
+    row.every(cell => cell.value !== 0 && !cell.invalid)
+  );
+}
    convertApiBoardToGameBoard(board:Board):GameBoard{
       const gameBoard:GameBoard = board.map((row,rowIndex)=> row.map((cell,colIndex) => ({
         value: cell,
