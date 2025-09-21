@@ -9,6 +9,7 @@ import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angula
 import { NgClass } from '@angular/common';
 import { BoardCell } from '../../models/boardCell';
 import { GameOver } from "../game-over/game-over";
+import { SudokuGame } from '../../services/sudoku-game';
 @Component({
   selector: 'app-game-board',
   imports: [MatButton, FormsModule, ReactiveFormsModule, MatMenu, MatMenuTrigger, MatIcon, MatListOption, MatSelectionList, NgClass, GameOver],
@@ -18,6 +19,7 @@ import { GameOver } from "../game-over/game-over";
 export class GameBoard implements OnInit {
 
   protected sudokuStateService = inject(SudokuState);
+  protected sudokuGameService = inject(SudokuGame);
   protected readonly sudokuSize: number = 9;
   protected numPad: number[] = [1,2,3,4,5,6,7,8,9];
   protected readonly difficulties: Difficulty[] = ['easy','medium','hard'];
@@ -90,7 +92,7 @@ export class GameBoard implements OnInit {
       boardCell.invalid = false
     }
     if(input.value != ''){
-      if(!this.sudokuStateService.updateBoard(cellRow,cellCol,value)){
+      if(!this.sudokuStateService.isCellValid(cellRow,cellCol,value)){
         if(this.sudokuStateService.mistakes() === 0){
           console.warn('Game Over!');
         }
@@ -110,7 +112,7 @@ export class GameBoard implements OnInit {
   onNumpadClick(newValue:number){
     if(!this.selectedCell) return;
     const {row,column} = this.selectedCell;
-    const valid = this.sudokuStateService.updateBoard(row,column,newValue);
+    const valid = this.sudokuStateService.isCellValid(row,column,newValue);
     if(valid) this.selectedCell = null;
   }
 }
