@@ -9,7 +9,7 @@ import { ValidCellInput } from '../models/validCellInput';
 import { showSudokuStatus } from './helpers/sudoku-ui-message-';
 import { getMistakesPerDifficulty } from './helpers/game-utils';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SudokuState {
   private apiService = inject(Api);
@@ -19,59 +19,58 @@ export class SudokuState {
   status = signal<string | null>(null);
   difficulty = signal<Difficulty | null>(null);
   gameBoard = signal<GameBoard | null>(null);
-  mistakes = signal<number | null> (null);
+  mistakes = signal<number | null>(null);
 
-  generateBoard(difficulty:Difficulty)
-  {
+  generateBoard(difficulty: Difficulty) {
     return this.apiService.generateData(difficulty).subscribe({
-      next: response =>{
+      next: (response) => {
         this.apiBoard.set(response.board);
         this.difficulty.set(difficulty);
         this.mistakes.set(getMistakesPerDifficulty(difficulty));
         this.gameBoard.set(this.sudokuGameService.convertApiBoardToGameBoard(this.apiBoard()!));
         console.log(this.apiBoard());
       },
-      error: error => console.log(error)
+      error: (error) => console.log(error),
     });
   }
-  validateBoard(){
+  validateBoard() {
     this.apiBoard.set(this.sudokuGameService.convertGameBoardToApiBoard(this.gameBoard()!));
     return this.apiService.validateBoard(this.apiBoard()!).subscribe({
-      next: response =>{
+      next: (response) => {
         this.status.set(response.status);
-        showSudokuStatus(this.snackbarService,response.status);
-      } ,
-      error: error => console.log(error)
+        showSudokuStatus(this.snackbarService, response.status);
+        console.log(response.status);
+      },
+      error: (error) => console.log(error),
     });
   }
-  solveBoard(gameBoard:GameBoard){
+  solveBoard(gameBoard: GameBoard) {
     this.apiBoard.set(this.sudokuGameService.convertGameBoardToApiBoard(gameBoard));
-    if(this.status() === 'solved') return;
+    if (this.status() === 'solved') return;
     return this.apiService.solveBoard(this.apiBoard()!).subscribe({
-      next: response =>{
-        if(response.status === 'unsolvable'){
+      next: (response) => {
+        if (response.status === 'unsolvable') {
           this.status.set('broken');
-          showSudokuStatus(this.snackbarService,this.status()!);
+          showSudokuStatus(this.snackbarService, this.status()!);
           return;
-        }
-        else{
+        } else {
           this.status.set('solved');
         }
-        showSudokuStatus(this.snackbarService,this.status()!);
+        showSudokuStatus(this.snackbarService, this.status()!);
         this.apiBoard.set(response.solution);
         this.gameBoard.set(this.sudokuGameService.convertApiBoardToGameBoard(this.apiBoard()!));
       },
-      error: error => console.log(error)
+      error: (error) => console.log(error),
     });
   }
-  isCellValid(cellRow:number,cellCol:number,newValue:number):boolean{
+  isCellValid(cellRow: number, cellCol: number, newValue: number): boolean {
     const input: ValidCellInput = {
       gameBoard: this.gameBoard()!,
       apiBoard: this.apiBoard()!,
       cellRow: cellRow,
       cellCol: cellCol,
       newValue: newValue,
-      mistakes: this.mistakes()!
+      mistakes: this.mistakes()!,
     };
     const isValid = this.sudokuGameService.isCellValid(input);
     this.gameBoard.set(isValid.gameBoard);
