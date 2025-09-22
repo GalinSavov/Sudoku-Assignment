@@ -31,7 +31,6 @@ export class SudokuState {
         this.difficulty.set(difficulty);
         this.mistakes.set(getMistakesPerDifficulty(difficulty));
         this.gameBoard.set(this.sudokuGameService.convertApiBoardToGameBoard(this.apiBoard()!));
-        console.log(this.apiBoard());
       },
       error: (error) => console.log(error),
     });

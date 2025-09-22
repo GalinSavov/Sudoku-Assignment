@@ -46,7 +46,6 @@ export class GameBoard implements OnInit {
   solveBoard(){
     if(!this.sudokuStateService.gameBoard()) return;
     this.sudokuStateService.solveBoard(this.sudokuStateService.gameBoard()!);
-    //this.sudokuStateService.autoSolved.set(true);
   }
   onDifficultyChange(event:MatSelectionListChange)
   {
@@ -95,13 +94,12 @@ export class GameBoard implements OnInit {
   onCellInput(event:any,cellRow:number,cellCol:number,boardCell:BoardCell){
     const input = event.target as HTMLInputElement;
 
-    // Only take the first character
     if (input.value.length > 1) input.value = input.value[0];
 
     const value = parseInt(input.value, 10);
     if (isNaN(value)) {
-    boardCell.value = 0;     // explicitly clear the cell
-    boardCell.invalid = false; // reset invalid flag
+    boardCell.value = 0;     
+    boardCell.invalid = false; 
     this.sudokuStateService.apiBoard.set(
       this.sudokuGameService.convertGameBoardToApiBoard(this.sudokuStateService.gameBoard()!)
     );
