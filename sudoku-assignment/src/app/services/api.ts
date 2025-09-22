@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable, signal, Signal } from '@angular/core';
+import { inject, Injectable} from '@angular/core';
 import { environment } from '../../environments/environment.prod';
 import { Board } from '../models/board';
 import { Observable } from 'rxjs';

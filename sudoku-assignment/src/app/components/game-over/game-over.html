@@ -1,14 +1,14 @@
 @if (sudokuStateService.mistakes() == 0) {
-<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 bg-opacity-0">
-    <mat-card class="rounded-xl shadow-xl p-8 w-80 text-center">
-      <mat-card-title class="mb-4 text-3xl font-bold "[style.color]="'purple'">
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <mat-card class="rounded-xl shadow-xl p-6 sm:p-8 w-11/12 sm:w-96 text-center">
+      <mat-card-title class="mb-4 text-2xl sm:text-3xl font-bold" [style.color]="'purple'">
         Game Over
       </mat-card-title>
-      <mat-card-content class="text-gray-700 mb-6 text-xl">
+      <mat-card-content class="text-gray-700 mb-6 text-lg sm:text-xl">
         You made too many mistakes, Try Again!
       </mat-card-content>
       <mat-card-actions class="flex justify-center">
-        <button mat-stroked-button class="text-xl" (click)="restartGame()">
+        <button mat-stroked-button class="px-6 py-2 text-lg sm:text-xl" (click)="restartGame()">
           Restart
         </button>
       </mat-card-actions>
