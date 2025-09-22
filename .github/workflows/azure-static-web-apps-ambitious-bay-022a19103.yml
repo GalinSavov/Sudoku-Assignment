@@ -21,7 +21,7 @@ jobs:
           lfs: false
           
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
         
       - name: Run Tests
         run: npm test
@@ -51,4 +51,5 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_AMBITIOUS_BAY_022A19103 }}
           action: "close"
+
 
