@@ -1,0 +1,30 @@
+name: CI - Test and Build
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          lfs: false
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./sudoku-assignment
+
+      - name: Run tests
+        run: npm test
+        working-directory: ./sudoku-assignment
+
+      - name: Build app
+        run: npm run build
+        working-directory: ./sudoku-assignment
