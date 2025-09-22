@@ -1,11 +1,7 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { Difficulty } from '../../models/difficulty';
-import { MatButton } from '@angular/material/button';
-import { SudokuState } from '../../services/sudoku-state';
-
+import { Component} from '@angular/core';
 @Component({
   selector: 'app-api-test',
-  imports: [MatButton],
+  imports: [],
   templateUrl: './api-test.html',
   styleUrl: './api-test.scss'
 })
