@@ -46,6 +46,7 @@ export class GameBoard implements OnInit {
   solveBoard(){
     if(!this.sudokuStateService.gameBoard()) return;
     this.sudokuStateService.solveBoard(this.sudokuStateService.gameBoard()!);
+    //this.sudokuStateService.autoSolved.set(true);
   }
   onDifficultyChange(event:MatSelectionListChange)
   {

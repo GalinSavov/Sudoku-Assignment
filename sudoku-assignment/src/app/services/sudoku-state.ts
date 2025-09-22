@@ -21,8 +21,10 @@ export class SudokuState {
   difficulty = signal<Difficulty | null>(null);
   gameBoard = signal<GameBoard | null>(null);
   mistakes = signal<number | null>(null);
+  autoSolved = signal<boolean>(false);
 
   generateBoard(difficulty: Difficulty) {
+    this.resetSignals();
     return this.apiService.generateData(difficulty).subscribe({
       next: (response) => {
         this.apiBoard.set(response.board);
@@ -34,20 +36,19 @@ export class SudokuState {
       error: (error) => console.log(error),
     });
   }
+
   validateBoard() {
     this.apiBoard.set(this.sudokuGameService.convertGameBoardToApiBoard(this.gameBoard()!));
     return this.apiService.validateBoard(this.apiBoard()!).subscribe({
       next: (response) => {
         this.status.set(response.status);
         showSudokuStatus(this.snackbarService, response.status);
-        console.log(response.status);
       },
       error: (error) => console.log(error),
     });
   }
   solveBoard(gameBoard: GameBoard) {
     this.apiBoard.set(this.sudokuGameService.convertGameBoardToApiBoard(gameBoard));
-    if (this.status() === 'solved') return;
     return this.apiService.solveBoard(this.apiBoard()!).subscribe({
       next: (response) => {
         if (response.status === 'unsolvable') {
@@ -56,6 +57,7 @@ export class SudokuState {
           return;
         } else {
           this.status.set('solved');
+          this.autoSolved.set(true);
         }
         showSudokuStatus(this.snackbarService, this.status()!);
         this.apiBoard.set(response.solution);
@@ -78,5 +80,12 @@ export class SudokuState {
     this.apiBoard.set(isValid.apiBoard);
     this.mistakes.set(isValid.mistakes);
     return isValid.isValid;
+  }
+  resetSignals(){
+      this.status.set(null);
+      this.apiBoard.set(null);
+      this.gameBoard.set(null);
+      this.mistakes.set(null);
+      this.autoSolved.set(false);
   }
 }
