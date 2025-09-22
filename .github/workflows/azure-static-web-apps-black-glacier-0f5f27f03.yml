@@ -38,6 +38,7 @@ jobs:
           action: "upload"
           app_location: "sudoku-assignment"              # adjust if Angular app is in subfolder
           api_location: ""               # empty if no API
-          output_location: "sudoku-assignment/dist/sudoku-assignmentdist"  # must match angular.json outputPath
+          output_location: "sudoku-assignment/dist/sudoku-assignment"  # must match angular.json outputPath
+
 
 
