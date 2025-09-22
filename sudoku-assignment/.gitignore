@@ -1,0 +1,31 @@
+# Angular build output
+/dist
+/out-tsc
+
+# Node
+/node_modules
+
+# IDEs and editors
+/.idea
+/.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Misc
+.DS_Store
+Thumbs.db
+
+# Env files
+*.env
+*.local
+
+# Angular specific
+/.angular/cache
+.angular/*
