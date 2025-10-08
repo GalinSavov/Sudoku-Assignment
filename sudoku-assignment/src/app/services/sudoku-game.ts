@@ -57,6 +57,7 @@ export class SudokuGame {
     return output;
   }
   isBoardComplete(gameBoard: GameBoard): boolean {
+    console.log("Is board complete was called!");
     return gameBoard.every((row) => row.every((cell) => cell.value !== 0 && !cell.invalid));
   }
   convertApiBoardToGameBoard(board: Board): GameBoard {

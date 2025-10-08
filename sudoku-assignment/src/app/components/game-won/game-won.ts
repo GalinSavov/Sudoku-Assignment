@@ -12,7 +12,6 @@ import { MatButton } from '@angular/material/button';
 export class GameWon {
   protected sudokuGameService = inject(SudokuGame);
   protected sudokuStateService = inject(SudokuState);
-  boardBeforeAutoSolve = this.sudokuStateService.preAutoSolveBoard;
   boardNow = this.sudokuStateService.gameBoard();
   restartGame(){
     const difficulty = this.sudokuStateService.difficulty() ?? 'easy';

@@ -15,7 +15,6 @@ export class SudokuState {
   private apiService = inject(Api);
   private snackbarService = inject(Snackbar);
   private sudokuGameService = inject(SudokuGame);
-  preAutoSolveBoard = signal<Board | null>(null);
   apiBoard = signal<Board | null>(null);
   status = signal<string | null>(null);
   difficulty = signal<Difficulty | null>(null);
