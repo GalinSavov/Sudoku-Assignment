@@ -4,5 +4,5 @@ import { Difficulty } from "./difficulty"
 export type SolveResponse = {
     difficulty:Difficulty,
     solution: Board,
-    status: 'solved' | 'broken' | 'unsolved'
+    status: 'solved' | 'broken' | 'unsolvable'
 };
