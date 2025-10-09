@@ -18,16 +18,14 @@ import { CelectedCell } from '../../models/selectedCell';
   templateUrl: './game-board.html',
   styleUrl: './game-board.scss'
 })
-export class GameBoard implements OnInit{
+export class GameBoard{
 
   protected sudokuStateService = inject(SudokuState);
   protected sudokuGameService = inject(SudokuGame);
   protected busyService = inject(Busy);
   protected readonly sudokuSize: number = 9;
   protected selectedCell: CelectedCell = {row:-1,column:-1};
-ngOnInit(): void {
-    if (!this.sudokuStateService.gameBoard()) this.sudokuStateService.generateBoard('easy');
-  }
+
   onKeyDown(event:KeyboardEvent){
     if(!this.selectedCell) return;
     const boundsIndex = 8;

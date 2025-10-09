@@ -21,7 +21,7 @@ export class GameControls implements OnInit {
   @Input () selectedCell: CelectedCell = {row:-1,column:-1};
 
   ngOnInit(): void {
-    if (!this.sudokuStateService.gameBoard()) this.generateBoard('easy');
+    if (!this.sudokuStateService.gameBoard()) this.generateBoard(this.selectedDifficulty);
   }
   generateBoard(difficulty: Difficulty) {
     this.sudokuStateService.generateBoard(difficulty);
