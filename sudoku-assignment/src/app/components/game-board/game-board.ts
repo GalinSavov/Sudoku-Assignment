@@ -1,11 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SudokuState } from '../../services/sudoku-state';
 import { Difficulty } from '../../models/difficulty';
-import { MatButton } from '@angular/material/button';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatMenu, MatMenuTrigger} from '@angular/material/menu';
-import { MatIcon } from '@angular/material/icon';
-import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 import { NgClass } from '@angular/common';
 import { BoardCell } from '../../models/boardCell';
 import { GameOver } from "../game-over/game-over";
@@ -13,48 +9,24 @@ import { SudokuGame } from '../../services/sudoku-game';
 import { GameWon } from "../game-won/game-won";
 import { Busy } from '../../services/busy';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import { GameControls } from '../game-controls/game-controls';
+import { CelectedCell } from '../../models/selectedCell';
 @Component({
   selector: 'app-game-board',
-  imports: [MatButton, FormsModule, ReactiveFormsModule, MatMenu, 
-    MatMenuTrigger, MatIcon, MatListOption, MatSelectionList, 
-    NgClass, GameOver, GameWon,MatProgressSpinner],
+  imports: [ FormsModule, ReactiveFormsModule, 
+    NgClass, GameOver, GameWon,MatProgressSpinner,GameControls],
   templateUrl: './game-board.html',
   styleUrl: './game-board.scss'
 })
-export class GameBoard implements OnInit {
+export class GameBoard implements OnInit{
 
   protected sudokuStateService = inject(SudokuState);
   protected sudokuGameService = inject(SudokuGame);
   protected busyService = inject(Busy);
   protected readonly sudokuSize: number = 9;
-  protected numPad: number[] = [1,2,3,4,5,6,7,8,9];
-  protected readonly difficulties: Difficulty[] = ['easy','medium','hard'];
-  protected selectedDifficulty:Difficulty = 'easy';
-  protected selectedCell: {row:number,column:number} | null = null;
-
-  ngOnInit(): void {
-    if(!this.sudokuStateService.gameBoard())
-    this.generateBoard('easy');
-  }
-  generateBoard(difficulty:Difficulty){
-      this.sudokuStateService.generateBoard(difficulty);
-    }
-  validateBoard(){
-    if(!this.sudokuStateService.gameBoard()) return;
-    this.sudokuStateService.validateBoard();
-  }
-  solveBoard(){
-    if(!this.sudokuStateService.gameBoard()) return;
-    this.sudokuStateService.solveBoard(this.sudokuStateService.gameBoard()!);
-  }
-  onDifficultyChange(event:MatSelectionListChange)
-  {
-      const selectedDifficulty = event.options[0];
-      if(selectedDifficulty){
-        this.sudokuStateService.difficulty.set(selectedDifficulty.value);
-        this.selectedDifficulty = this.sudokuStateService.difficulty()!;
-        this.generateBoard(this.selectedDifficulty);
-      }
+  protected selectedCell: CelectedCell = {row:-1,column:-1};
+ngOnInit(): void {
+    if (!this.sudokuStateService.gameBoard()) this.sudokuStateService.generateBoard('easy');
   }
   onKeyDown(event:KeyboardEvent){
     if(!this.selectedCell) return;
@@ -137,12 +109,6 @@ export class GameBoard implements OnInit {
     }
   });
 }
-  onNumpadClick(newValue:number){
-    if(!this.selectedCell) return;
-    const {row,column} = this.selectedCell;
-    const valid = this.sudokuStateService.isCellValid(row,column,newValue);
-    if(valid) this.selectedCell = null;
-  }
   isCellInHighlight(cell: BoardCell): boolean {
   if (!this.selectedCell) return false;
 

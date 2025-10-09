@@ -1,0 +1,45 @@
+<!-- Controls -->
+    <div class="flex flex-col gap-5 mt-5 w-full max-w-[280px]">
+      <!-- Buttons -->
+      <div class="flex flex-wrap justify-center gap-3">
+        <button mat-stroked-button class="text-rose-400 text-sm sm:text-base" [mat-menu-trigger-for]="difficultyMenu">
+          <mat-icon class="text-black">settings</mat-icon>
+          Difficulty: {{this.selectedDifficulty.toUpperCase()}}
+        </button>
+        <button mat-stroked-button class="text-rose-400 text-sm sm:text-base" (click)="validateBoard()">
+          <mat-icon class="text-black">check_small</mat-icon>
+          Validate
+        </button>
+        <button mat-stroked-button class="text-rose-400 text-sm sm:text-base" (click)="solveBoard()">
+          <mat-icon class="text-black">lightbulb</mat-icon>
+          Auto Solve
+        </button>
+      </div>
+      <!-- Numpad -->
+      <div class="flex justify-center">
+        <div class="w-full max-w-[250px] aspect-square grid gap-2 sm:gap-3 grid-rows-3 grid-cols-3">
+          @for (number of numPad; track $index) {
+            <div class="flex items-center justify-center text-lg sm:text-xl border border-gray-300 cursor-pointer"
+                (click)="onNumpadClick(number)">
+              {{number}}
+            </div>
+          }
+          <div class="col-span-3">
+            <button mat-stroked-button class="w-full text-base sm:text-xl mt-2 text-rose-400"
+                    (click)="generateBoard(selectedDifficulty)">
+              New Game
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- Difficulty Menu -->
+<mat-menu #difficultyMenu="matMenu">
+  <mat-selection-list [multiple]="false" (selectionChange)="onDifficultyChange($event)">
+    @for (difficulty of difficulties; track $index) {
+      <mat-list-option [value]="difficulty" [selected]="this.sudokuStateService.difficulty() === difficulty">
+        {{difficulty.toUpperCase()}}
+      </mat-list-option>
+    }
+  </mat-selection-list>
+</mat-menu>
