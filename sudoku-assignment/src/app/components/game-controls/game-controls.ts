@@ -4,8 +4,8 @@ import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angula
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { Difficulty } from '../../models/difficulty';
 import { SudokuState } from '../../services/sudoku-state';
-import { CelectedCell } from '../../models/selectedCell';
 import { MatButton } from '@angular/material/button';
+import { SelectedCell } from '../../models/selectedCell';
 
 @Component({
   selector: 'app-game-controls',
@@ -18,10 +18,10 @@ export class GameControls implements OnInit {
   protected selectedDifficulty: Difficulty = 'easy';
   protected numPad: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   protected sudokuStateService = inject(SudokuState);
-  @Input () selectedCell: CelectedCell = {row:-1,column:-1};
+  @Input () selectedCell: SelectedCell = {row:-1,column:-1};
 
   ngOnInit(): void {
-    if (!this.sudokuStateService.gameBoard()) this.generateBoard('easy');
+    if (!this.sudokuStateService.gameBoard()) this.generateBoard(this.selectedDifficulty);
   }
   generateBoard(difficulty: Difficulty) {
     this.sudokuStateService.generateBoard(difficulty);
