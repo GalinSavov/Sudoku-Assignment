@@ -10,7 +10,7 @@ import { GameWon } from "../game-won/game-won";
 import { Busy } from '../../services/busy';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import { GameControls } from '../game-controls/game-controls';
-import { CelectedCell } from '../../models/selectedCell';
+import { SelectedCell } from '../../models/selectedCell';
 @Component({
   selector: 'app-game-board',
   imports: [ FormsModule, ReactiveFormsModule, 
@@ -24,7 +24,7 @@ export class GameBoard{
   protected sudokuGameService = inject(SudokuGame);
   protected busyService = inject(Busy);
   protected readonly sudokuSize: number = 9;
-  protected selectedCell: CelectedCell = {row:-1,column:-1};
+  protected selectedCell: SelectedCell = {row:-1,column:-1};
 
   onKeyDown(event:KeyboardEvent){
     if(!this.selectedCell) return;
