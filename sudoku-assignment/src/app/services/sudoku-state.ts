@@ -49,7 +49,7 @@ export class SudokuState {
     this.apiBoard.set(this.sudokuGameService.convertGameBoardToApiBoard(gameBoard));
     return this.apiService.solveBoard(this.apiBoard()!).subscribe({
       next: (response) => {
-        if (response.status === 'unsolvable') {
+        if (response.status === 'unsolved') {
           this.status.set('broken');
           showSudokuStatus(this.snackbarService, this.status()!);
           return;
